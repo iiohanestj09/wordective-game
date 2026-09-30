@@ -21,6 +21,18 @@ const caseDifficultySchema = new mongoose.Schema(
       ref: "Difficulty",
       required: true,
     },
+
+    correct_suspect: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    logic_notes: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     collection: "case_difficulties",

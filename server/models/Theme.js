@@ -1,36 +1,31 @@
-// Collection: cases
+// Collection: themes
 const mongoose = require("mongoose");
 
-const caseSchema = new mongoose.Schema(
+const themeSchema = new mongoose.Schema(
   {
-    case_id: {
+    theme_id: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       unique: true,
       default: () => new mongoose.Types.ObjectId(),
     },
 
-    theme_id: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Theme",
-      required: true,
-    },
-
-    case_title: {
+    theme_name: {
       type: String,
       required: true,
       trim: true,
     },
 
-    story: {
+    description: {
       type: String,
       required: true,
+      trim: true,
     },
   },
   {
-    collection: "cases",
+    collection: "themes",
     timestamps: false,
   }
 );
 
-module.exports = mongoose.model("Case", caseSchema);
+module.exports = mongoose.model("Theme", themeSchema);
