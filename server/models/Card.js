@@ -37,6 +37,18 @@ const cardSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+
+    gender: {
+      type: String,
+      enum: ["Men", "Women"],
+      default: null,
+    },
+
+    img_url: {
+      type: String,
+      default: null,
+      trim: true,
+    },
   },
   {
     collection: "cards",

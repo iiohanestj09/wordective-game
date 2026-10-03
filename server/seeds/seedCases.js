@@ -1,6 +1,4 @@
 // Seed data from worksheet: cases
-// theme_id is converted from the spreadsheet code (e.g. T001)
-// to the deterministic ObjectId used by the Theme document.
 const Case = require("../models/Case");
 const { objectIdFromCode, upsertMany, assertReference } = require("./seedUtils");
 

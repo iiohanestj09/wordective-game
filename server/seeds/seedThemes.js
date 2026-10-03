@@ -1,6 +1,4 @@
 // Seed data from worksheet: themes
-// SOURCE MAPPING: workbook column "story" -> model/Collections field "description".
-// No theme text is changed; only the field name is mapped.
 const Theme = require("../models/Theme");
 const { objectIdFromCode, upsertMany, assertReference } = require("./seedUtils");
 

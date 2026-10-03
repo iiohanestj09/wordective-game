@@ -1,13 +1,6 @@
 const crypto = require("crypto");
 const mongoose = require("mongoose");
 
-/**
- * Convert spreadsheet business IDs such as T001, C001, CD001, V001
- * into deterministic MongoDB ObjectIds.
- *
- * The same source ID always produces the same ObjectId, which keeps
- * references consistent across independent seeders.
- */
 function objectIdFromCode(code) {
   const hex = crypto
     .createHash("sha256")

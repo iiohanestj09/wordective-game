@@ -1,5 +1,4 @@
 // Seed data from worksheet: case_vocabularies
-// The blank row directly below the header in the workbook is ignored because it contains no data.
 const CaseVocabulary = require("../models/CaseVocabulary");
 const { objectIdFromCode, upsertMany, assertReference } = require("./seedUtils");
 

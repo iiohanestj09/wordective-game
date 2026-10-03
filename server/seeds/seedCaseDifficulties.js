@@ -1,6 +1,4 @@
 // Seed data from worksheet: case_difficulties
-// SOURCE MAPPING: workbook column "logic_note" -> model/Collections field "logic_notes".
-// The source row is preserved; only the field name is mapped.
 const CaseDifficulty = require("../models/CaseDifficulty");
 const { objectIdFromCode, upsertMany, assertReference } = require("./seedUtils");
 
