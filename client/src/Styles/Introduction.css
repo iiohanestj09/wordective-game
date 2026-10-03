@@ -1,23 +1,32 @@
+/* Arbutus Slab */
+@import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
+/* Roboto Slab */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+/* Cantata One */
+@import url('https://fonts.googleapis.com/css2?family=Cantata+One&display=swap');
+/* Mukta Malar */
+@import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@200;300;400;500;600;700;800&display=swap');
+/* Fira Code */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap');
+
+/** SECTION 1: INTRODUCTION */
 .intro-section {
   width: 100%;
   min-height: 724px;
   background: #FFFFFF;
   display: flex;
-  padding-top: 81px;
+  padding-top: 81px; 
   box-sizing: border-box;
 }
 
-/* Kolom Kiri - Rasio 60 */
 .intro-left {
   flex: 6;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* Menambahkan padding-bottom 150px untuk mendorong seluruh teks lebih ke atas */
-  padding: 0 34px 150px 92px; 
+  padding: 0 34px 115px 92px;
 }
 
-/* Wrapper icon dan teks kecil */
 .icon-text-wrapper {
   display: flex;
   align-items: center;
@@ -25,52 +34,254 @@
   margin-bottom: 7px;
 }
 
-/* Kotak abu-abu icon */
-.icon-placeholder {
-  width: 27px;
-  height: 25px;
-  background: #D9D9D9;
+.icon-intro {
+  width: 17px;
+  height: 17px;
+  background: #b5b5b5;
+  border: #151515 4px solid;
 }
 
-/* Text Kecil */
 .text-small {
   font-size: 23px;
   line-height: 25px;
   color: #000000;
   margin: 0;
+  font-style: italic;
 }
 
-/* Text H1 */
 .text-large {
-  font-size: 55px;
+  font-family: 'Cantata One';
+  font-size: 48px;
   line-height: 68px;
   color: #000000;
   margin: 0 0 20px 0;
+  max-width: 690px;
 }
 
-/* Text Sedang */
+
 .text-medium {
-  font-size: 23px;
+  font-family: 'Roboto Slab';
+  font-size: 18px;
   line-height: 25px;
-  color: #000000;
-  max-width: 557px;
+  color: #252525;
+  max-width: 580px;
   margin: 0;
 }
 
-/* Kolom Kanan - Rasio 40 */
 .intro-right {
   flex: 4;
   display: flex;
   align-items: center;
-  /* Mengubah perataan horizontal menjadi flex-start (rata kiri) */
   justify-content: flex-start; 
-  /* Memberikan margin negatif untuk menarik kotak abu-abu lebih ke kiri lagi */
-  margin-left: -60px; 
+  margin-left: -60px;
+  padding-bottom: 90px;
 }
 
-/* Gambar Ilustrasi (Kotak abu-abu) */
+/* Bingkai luar carousel (Memotong gambar luar) */
+.carousel-container {
+  width: 491px;
+  height: 405px;
+  overflow: hidden; /* Menyembunyikan gambar yang berada di luar bingkai */
+  position: relative;
+}
+
+/* Jalur gambar bergulir */
+/* Sesuaikan .carousel-track Anda menjadi seperti ini */
+.carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* Ukuran masing-masing gambar di dalam carousel */
+.illustration-placeholder {
+  min-width: 491px; /* Sesuai lebar container */
+  height: 405px;
+  flex-shrink: 0;   /* Mencegah gambar menyusut saat berjajar */
+  object-fit: contain;
+}
+
 .illustration-placeholder {
   width: 491px;
   height: 405px;
   background: #D9D9D9;
+}
+
+/** SECTION 2: DESCRIPTION  */
+.tutorial-section {
+  width: 100%;
+  min-height: 724px;
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 34px; 
+  box-sizing: border-box;
+}
+
+.tutorial-header {
+  font-family: 'Arbutus Slab';
+  font-size: 55px; 
+  line-height: 68px;
+  color: #000000;
+  margin: 30px 0 80px 0;
+  text-align: center;
+}
+
+.tutorial-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 78px;
+  width: 100%;
+}
+
+.tutorial-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 316px; 
+}
+
+.desc-icon {
+  width: 188px;
+  height: 198px;
+  margin-bottom: 25px;
+}
+
+.tutorial-card-title {
+  font-family: 'Cantata One';
+  font-size: 27px; 
+  line-height: 34px;
+  letter-spacing: 0.01em;
+  color: #161616;
+  margin: 0 0 15px 0;
+  text-align: center;
+}
+
+.tutorial-card-desc {
+  font-family: 'Mukta Malar';
+  font-size: 18px; 
+  line-height: 21px;
+  color: #3c3c3c;
+  text-align: center;
+  margin: 0;
+  max-width: 280px;
+} 
+
+/** SECTION 3: ABOUT US */
+.about-section {
+  width: 100%;
+  /* min-height: 724px; */
+  background: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 80px 34px 0px; 
+  box-sizing: border-box;
+}
+
+.about-header {
+  font-family: 'Arbutus Slab';
+  font-size: 55px; 
+  line-height: 68px;
+  color: #000000;
+  margin: 15px 0 20px 0;
+  text-align: center;
+}
+
+.about-cards-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 78px;
+  width: 100%;
+}
+
+.about-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 316px; 
+}
+
+.about-photo {
+  width: 200px;
+  margin-bottom: 18px;
+}
+
+.about-card-title {
+  font-family: 'Cantata One';
+  font-size: 27px; 
+  line-height: 34px;
+  letter-spacing: 0.01em;
+  color: #161616;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.about-card-desc {
+  font-family: 'Fira Code';
+  font-size: 19px; 
+  line-height: 27px;
+  color: #000000;
+  text-align: center;
+  margin: 0;
+}
+
+.start-game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px; 
+  padding-bottom: 10px; 
+}
+
+.start-game-btn {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 700;
+  height: 50px; 
+  font-size: 24px; 
+  line-height: 31px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 30px;
+  border: #3c3c3c 3.5px solid;
+  cursor: pointer;
+
+  background-color: #3C2A1E; 
+  color: #000000;            
+  
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+
+  transition: color 0.8s ease-in-out, transform 0.4s ease;
+}
+
+.start-game-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F3E4C9; 
+  z-index: -1;
+  clip-path: inset(0%); 
+  transition: clip-path 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.start-game-btn:hover {
+  color: #FFFFFF;
+}
+
+.start-game-btn:hover::before {
+  clip-path: inset(50%);
+}
+
+.start-game-btn:active {
+  transform: scale(0.98);
 }

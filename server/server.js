@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const path = require('path');
 const app = express();
 
 // Middleware
@@ -28,3 +28,6 @@ mongoose.connect(process.env.MONGODB_URI)
   .catch((err) => {
     console.error('❌ Gagal terhubung ke MongoDB:', err.message);
   });
+
+// Tambahkan baris ini untuk membuat folder 'public' bisa diakses secara publik
+app.use(express.static(path.join(__dirname, 'public')));

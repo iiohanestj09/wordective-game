@@ -1,14 +1,19 @@
+/* IBM Plex Mono */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+/* Galindo */
+@import url('https://fonts.googleapis.com/css2?family=Galindo&display=swap');
+
 .navbar {
   position: fixed;
   width: 100%;
-  height: 81px; /* 121 * 0.67 */
+  height: 81px;
   left: 0px;
   top: 0px;
   background: #2A2A2A;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 34px; /* 50 * 0.67 */
+  padding: 0 34px;
   box-sizing: border-box;
   z-index: 999;
 }
@@ -16,49 +21,95 @@
 .navbar-left {
   display: flex;
   align-items: center;
-  gap: 13px; /* 20 * 0.67 */
+  gap: 13px;
+  cursor: pointer; /* Indikator kursor tangan pada logo (karena bisa diklik) */
 }
 
-/* Logo Wordective (Kotak abu-abu) */
-.logo-placeholder {
-  width: 64px; /* 96 * 0.67 */
-  height: 61px; /* 91 * 0.67 */
-  background: #D9D9D9; 
+.logo-wordective {
+  width: 64px; 
+  height: 61px; 
 }
 
-/* Teks Wordective */
 .logo-text {
-  font-size: 37px; /* 55 * 0.67 */
-  line-height: 52px; /* 78 * 0.67 */
+  font-family: 'Galindo';
+  font-size: 37px; 
+  line-height: 52px; 
   color: #FFFFFF;
+  user-select: none;
 }
 
 .navbar-right {
   display: flex;
-  gap: 20px; /* 30 * 0.67 */
+  gap: 20px;
 }
 
-/* Button Umum */
+/* =========================================
+   BUTTON UMUM NAVBAR (DENGAN ANIMASI)
+   ========================================= */
 .nav-button {
-  height: 44px; /* 65 * 0.67 */
-  background: #F3E4C9;
-  font-size: 24px; /* 36 * 0.67 */
-  line-height: 31px; /* 47 * 0.67 */
+  font-family: 'IBM Plex Mono';
+  font-weight: 700;
+  height: 44px; 
+  font-size: 24px; 
+  line-height: 31px; 
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  color: #000000;
   padding: 0 13px;
+  border: none;
+  cursor: pointer;
+
+  /* Warna dasar (Coklat Tua & Teks awal) */
+  background-color: #c16b32; 
+  color: #000000; 
+  
+  /* Pengaturan layer & overflow untuk memotong animasi */
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  transition: color 0.4s ease-in-out, transform 0.1s ease;
 }
 
-/* Penyesuaian lebar button sesuai Figma dikali 0.67 */
+/* Layer Atas (Warna Krem) */
+.nav-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #F3E4C9;
+  z-index: -1;
+  
+  /* Awalnya utuh (tidak ada yang terpotong) */
+  clip-path: inset(0%);
+  transition: clip-path 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Efek saat tombol di-hover */
+.nav-button:hover {
+  color: #FFFFFF; /* Teks menjadi putih */
+}
+
+.nav-button:hover::before {
+  clip-path: inset(50%); /* Kotak krem mengecil ke titik tengah */
+}
+
+/* Efek saat tombol diklik */
+.nav-button:active {
+  transform: scale(0.98);
+}
+
+/* =========================================
+   UKURAN SPESIFIK TOMBOL
+   ========================================= */
 .nav-button:first-child {
-  width: 176px; /* 262 * 0.67 */
+  width: 188px; 
 }
 .about-us {
-  width: 142px; /* 212 * 0.67 */
+  width: 155px; 
 }
 .play-game {
-  width: 159px; /* 237 * 0.67 */
+  width: 160px; 
 }
