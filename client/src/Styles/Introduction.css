@@ -1,0 +1,76 @@
+.intro-section {
+  width: 100%;
+  min-height: 724px;
+  background: #FFFFFF;
+  display: flex;
+  padding-top: 81px;
+  box-sizing: border-box;
+}
+
+/* Kolom Kiri - Rasio 60 */
+.intro-left {
+  flex: 6;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Menambahkan padding-bottom 150px untuk mendorong seluruh teks lebih ke atas */
+  padding: 0 34px 150px 92px; 
+}
+
+/* Wrapper icon dan teks kecil */
+.icon-text-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  margin-bottom: 7px;
+}
+
+/* Kotak abu-abu icon */
+.icon-placeholder {
+  width: 27px;
+  height: 25px;
+  background: #D9D9D9;
+}
+
+/* Text Kecil */
+.text-small {
+  font-size: 23px;
+  line-height: 25px;
+  color: #000000;
+  margin: 0;
+}
+
+/* Text H1 */
+.text-large {
+  font-size: 55px;
+  line-height: 68px;
+  color: #000000;
+  margin: 0 0 20px 0;
+}
+
+/* Text Sedang */
+.text-medium {
+  font-size: 23px;
+  line-height: 25px;
+  color: #000000;
+  max-width: 557px;
+  margin: 0;
+}
+
+/* Kolom Kanan - Rasio 40 */
+.intro-right {
+  flex: 4;
+  display: flex;
+  align-items: center;
+  /* Mengubah perataan horizontal menjadi flex-start (rata kiri) */
+  justify-content: flex-start; 
+  /* Memberikan margin negatif untuk menarik kotak abu-abu lebih ke kiri lagi */
+  margin-left: -60px; 
+}
+
+/* Gambar Ilustrasi (Kotak abu-abu) */
+.illustration-placeholder {
+  width: 491px;
+  height: 405px;
+  background: #D9D9D9;
+}
