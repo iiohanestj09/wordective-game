@@ -18,11 +18,27 @@ const Introduction = () => {
 
   useEffect(() => {
     const intervalId = setInterval(() => {
+      if (document.visibilityState !== 'visible') return;
+
       setIsTransitioning(true);
-      setCurrentImageIndex((prevIndex) => prevIndex + 1);
+      setCurrentImageIndex((prevIndex) => Math.min(prevIndex + 1, carouselImages.length));
     }, 3000);
-    return () => clearInterval(intervalId);
-  }, []);
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'hidden') {
+        setIsTransitioning(false);
+        setCurrentImageIndex(0);
+      } else {
+        setIsTransitioning(true);
+      }
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => {
+      clearInterval(intervalId);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [carouselImages.length]);
 
   useEffect(() => {
     AOS.init({
@@ -52,6 +68,12 @@ const Introduction = () => {
           <p className="text-medium" data-aos="fade-up">
             Wordective turns English reading into an engaging mystery experience, helping you practice understanding texts, recognizing important details, and connecting information along the way.
           </p>
+
+          <div className="start-game-container" data-aos="flip-down" data-aos-delay="300">
+            <button className="start-game-btn">
+              Let's Start The Game
+            </button>
+          </div>
         </div>
 
         <div className="intro-right" data-aos="zoom-in" data-aos-delay="200">
@@ -118,7 +140,7 @@ const Introduction = () => {
             <h3 className="about-card-title">Arsyad</h3>
             <p className="about-card-desc"><b><i>Muhammad Arsyad Labiq</i></b></p>
             <p className="about-card-desc">240221606256</p>
-            <p className="about-card-desc">S1 Pendidikan Bahasa Ingris</p>
+            <p className="about-card-desc">English Language Education</p>
           </div>
 
           <div className="about-card" data-aos="flip-right" data-aos-delay="300">
@@ -126,7 +148,7 @@ const Introduction = () => {
             <h3 className="about-card-title">Niko</h3>
             <p className="about-card-desc"><b><i>Nikolaus Langgut</i></b></p>
             <p className="about-card-desc">250751624669</p>
-            <p className="about-card-desc">S1 Pendidikan Sosiologi</p>
+            <p className="about-card-desc">Sociology Education</p>
           </div>
 
           <div className="about-card" data-aos="flip-right" data-aos-delay="500">
@@ -134,14 +156,19 @@ const Introduction = () => {
             <h3 className="about-card-title">Putra</h3>
             <p className="about-card-desc"><b><i>Yohanes Putra P. Muwa Dae</i></b></p>
             <p className="about-card-desc">240535604155</p>
-            <p className="about-card-desc">S1 Teknik Informatika</p>
+            <p className="about-card-desc">Informatics Engineering</p>
           </div>
         </div>
+        <div className="about-info-container">
+          <div className="about-info-item">
+            <img className='about-info-icon' src={`${backendUrl}/images/icons/course.svg`} alt="Course" />
+            <p className="about-info-text">Course: Management of Inovation</p>
+          </div>
 
-        <div className="start-game-container">
-          <button className="start-game-btn">
-            Let's Start The Game
-          </button>
+          <div className="about-info-item">
+            <img className='about-info-icon' src={`${backendUrl}/images/icons/dosen.svg`} alt="Supporting Lecturer" />
+            <p className="about-info-text">Supporting Lecturer: Dr. Siti Mas'ula, M.Pd</p>
+          </div>
         </div>
       </section>
     </>
