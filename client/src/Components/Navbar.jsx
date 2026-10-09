@@ -1,4 +1,4 @@
-import React from 'react';
+import { Link } from 'react-router-dom';
 import '../Styles/Navbar.css';
 
 const Navbar = () => {
@@ -42,9 +42,9 @@ const Navbar = () => {
         </button>
 
         {/* Tombol Play Game */}
-        <button className="nav-button play-game">
+        <Link className="nav-button play-game" to="/choose-theme">
           Play Game
-        </button>
+        </Link>
       </div>
     </nav>
   );

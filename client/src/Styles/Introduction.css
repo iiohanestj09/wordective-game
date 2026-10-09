@@ -288,7 +288,7 @@
   z-index: 1;
   overflow: hidden;
 
-  transition: color 0.4s ease-in-out, transform 0.1s ease;
+  transition: color 0.35s ease-in-out, transform 0.1s ease;
 }
 
 .start-game-btn::before {
@@ -301,7 +301,7 @@
   background-color: #F3E4C9; 
   z-index: -1;
   clip-path: inset(0%); 
-  transition: clip-path 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: clip-path 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .start-game-btn:hover {
