@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/ChooseTheme.css';
+import { saveGameSession } from '../utils/gameSession';
 
 const backendUrl = 'http://localhost:5000';
 const themeOrder = [
@@ -22,10 +23,10 @@ const themeColors = [
 ];
 
 function ChooseTheme() {
+  const navigate = useNavigate();
   const [themes, setThemes] = useState([]);
   const [selectedThemeId, setSelectedThemeId] = useState(null);
   const [animatingThemeId, setAnimatingThemeId] = useState(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState(null);
   const [isDifficultyModalOpen, setIsDifficultyModalOpen] = useState(false);
   const [error, setError] = useState('');
 
@@ -84,7 +85,7 @@ function ChooseTheme() {
             <span>Wordective</span>
           </Link>
           <button className="choose-theme-nav-action" type="button">
-            Lets Choose Theme
+            Let's Choose Theme
           </button>
         </nav>
 
@@ -152,6 +153,7 @@ function ChooseTheme() {
             <button
               className="choose-theme-page-button"
               onClick={() => setIsDifficultyModalOpen(true)}
+              disabled={!selectedTheme}
               type="button"
             >
               Next
@@ -185,16 +187,28 @@ function ChooseTheme() {
               <div className="choose-theme-difficulty-options">
                 {['Beginner', 'Intermediate', 'Expert'].map((difficulty) => (
                   <button
-                    aria-pressed={selectedDifficulty === difficulty}
                     className={[
                       'choose-theme-difficulty-option',
                       `is-${difficulty.toLowerCase()}`,
-                      selectedDifficulty === difficulty ? 'is-selected' : '',
                     ].filter(Boolean).join(' ')}
                     key={difficulty}
                     onClick={() => {
-                      setSelectedDifficulty(difficulty);
-                      setIsDifficultyModalOpen(false);
+                      const params = new URLSearchParams({
+                        theme_id: selectedTheme.theme_id,
+                        difficulty,
+                        theme_index: String(selectedThemeIndex),
+                      });
+                      try {
+                        saveGameSession({
+                          themeId: selectedTheme.theme_id,
+                          difficulty,
+                          themeIndex: selectedThemeIndex,
+                          caseStory: null,
+                        });
+                        navigate(`/story?${params.toString()}`);
+                      } catch (sessionError) {
+                        setError(`Unable to save the temporary game session: ${sessionError.message}`);
+                      }
                     }}
                     type="button"
                   >
@@ -202,6 +216,11 @@ function ChooseTheme() {
                   </button>
                 ))}
               </div>
+              {error && (
+                <p className="choose-theme-modal-error" role="alert">
+                  {error}
+                </p>
+              )}
             </section>
           </div>
         )}

@@ -4,12 +4,14 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const path = require('path');
 const themeRoutes = require('./routes/themeRoutes');
+const caseRoutes = require('./routes/caseRoutes');
 const app = express();
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 app.use('/api/themes', themeRoutes);
+app.use('/api/cases', caseRoutes);
 
 // Tes route
 app.get('/', (req, res) => {

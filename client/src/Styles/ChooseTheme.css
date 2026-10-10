@@ -359,6 +359,13 @@
   outline-offset: 3px;
 }
 
+.choose-theme-modal-error {
+  margin: 16px 0 0;
+  color: #9e1b1b;
+  font-size: 18px;
+  text-align: center;
+}
+
 @media (max-width: 940px) {
   .choose-theme-page {
     height: auto;
