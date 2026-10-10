@@ -1,10 +1,16 @@
 /* Arbutus Slab */
 @import url('https://fonts.googleapis.com/css2?family=Arbutus+Slab&display=swap');
+/* Crimson Text */
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap');
+/* Zilla Slab */
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap');
+/* Enriqueta */
+@import url('https://fonts.googleapis.com/css2?family=Enriqueta:wght@400;500;600;700&display=swap');
 
 .choose-theme-page {
   position: relative;
   width: calc(100% + 16px);
-  height: 724px;
+  height: max(100vh, 670px);
   margin: -8px;
   background: #ffffff;
   color: #000000;
@@ -13,19 +19,21 @@
 }
 
 .choose-theme-canvas {
+  --choose-theme-navbar-height: 121px;
+
   position: absolute;
   top: 0;
   left: 0;
   width: 149.2537%;
-  min-height: 1080px;
+  min-height: max(1000px, 149.2537vh);
   transform: scale(0.67);
   transform-origin: top left;
 }
 
 .choose-theme-navbar {
   width: 100%;
-  height: 121px;
-  padding: 0 84px 0 38px;
+  height: var(--choose-theme-navbar-height);
+  padding: 0 84px 0 51px;
   box-sizing: border-box;
   background: #2a2a2a;
   display: flex;
@@ -47,17 +55,16 @@
 .choose-theme-logo {
   width: 96px;
   height: 91px;
-  object-fit: contain;
 }
 
 .choose-theme-nav-action {
-  width: 515px;
-  height: 70px;
+  width: 500px;
+  height: 68px;
   border: 0;
   background: #f3e4c9;
   color: #000000;
   font-family: 'IBM Plex Mono', monospace;
-  font-size: 45px;
+  font-size: 41px;
   font-weight: 700;
   text-align: center;
 }
@@ -69,7 +76,7 @@
 .choose-theme-heading {
   width: auto;
   height: 101px;
-  margin: 39px 0 48px 2.5%;
+  margin: 39px 0 40px 2.5%;
   color: #000000;
   font-family: 'Arbutus Slab';
   font-size: 75px;
@@ -103,9 +110,9 @@
   border-bottom: 3px solid #000000;
   background: #ffffff;
   color: #000000;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Crimson Text';
   font-size: clamp(24px, 1.98vw, 38px);
-  font-weight: 400;
+  font-weight: 600;
   text-align: left;
   white-space: nowrap;
   cursor: pointer;
@@ -171,43 +178,44 @@
 
 .choose-theme-title {
   position: absolute;
-  top: 51px;
-  left: 50px;
+  font-family: 'Zilla Slab';
+  top: 40px;
+  left: 70px;
   width: calc(100% - 100px);
   height: 61px;
   margin: 0;
-  font-size: 50px;
+  font-size: 64px;
   font-weight: 400;
   line-height: 61px;
 }
 
 .choose-theme-image {
   position: absolute;
-  top: 137px;
-  left: 50px;
-  width: min(669px, calc(68% - 50px));
-  height: 334px;
-  background: #d9d9d9;
+  top: 129px;
+  left: 70px;
+  width: min(900px, calc(80% - 20px));
+  height: 445 px;
   object-fit: cover;
 }
 
 .choose-theme-description {
+  font-family: 'Enriqueta';
   position: absolute;
-  top: 137px;
-  right: 81px;
+  top: 122px;
+  right: 73px;
   width: 284px;
-  height: 264px;
+  height: 400px;
   margin: 0;
   display: flex;
-  align-items: center;
-  font-size: 18px;
+  align-items: left;
+  font-size: 27px;
   font-weight: 400;
-  line-height: 22px;
+  line-height: 40px;
 }
 
 .choose-theme-navigation {
   width: 95%;
-  margin: 25px 0 46px -69px;
+  margin: 25px 0 0 -69px;
   display: flex;
   justify-content: flex-end;
   gap: 26px;
@@ -218,7 +226,8 @@
   z-index: 1;
   overflow: hidden;
   width: 154px;
-  height: 52px;
+  height: 60px;
+  box-sizing: border-box;
   padding: 0;
   border: #3c3c3c 3.5px solid;
   background-color: #3c2a1e;
@@ -257,6 +266,99 @@
   transform: scale(0.98);
 }
 
+.choose-theme-modal-overlay {
+  position: absolute;
+  z-index: 5;
+  top: var(--choose-theme-navbar-height);
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 38%);
+}
+
+.choose-theme-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(840px, 100%);
+  padding: 66px 72px 68px;
+  border: 4px solid #000000;
+  background: #f3e4c9;
+  box-shadow: 12px 12px 0 rgb(0 0 0 / 25%);
+}
+
+.choose-theme-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.choose-theme-modal-title {
+  margin: 0 0 40px;
+  font-family: 'Arbutus Slab', serif;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.choose-theme-difficulty-options {
+  display: grid;
+  gap: 18px;
+}
+
+.choose-theme-difficulty-option {
+  min-height: 82px;
+  padding: 12px 20px;
+  border: 3px solid #000000;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Crimson Text', serif;
+  font-size: 34px;
+  font-weight: 600;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.choose-theme-difficulty-option.is-beginner:hover,
+.choose-theme-difficulty-option.is-beginner.is-selected {
+  background: #4caf50;
+  color: #000000;
+}
+
+.choose-theme-difficulty-option.is-intermediate:hover,
+.choose-theme-difficulty-option.is-intermediate.is-selected {
+  background: #f2c94c;
+  color: #000000;
+}
+
+.choose-theme-difficulty-option.is-expert:hover,
+.choose-theme-difficulty-option.is-expert.is-selected {
+  background: #d94a4a;
+  color: #000000;
+}
+
+.choose-theme-difficulty-option:focus-visible,
+.choose-theme-difficulty-option.is-selected {
+  outline: 4px solid #000000;
+  outline-offset: 3px;
+}
+
 @media (max-width: 940px) {
   .choose-theme-page {
     height: auto;
@@ -265,6 +367,8 @@
   }
 
   .choose-theme-canvas {
+    --choose-theme-navbar-height: 90px;
+
     position: relative;
     width: 100%;
     min-height: 100vh;
@@ -272,7 +376,7 @@
   }
 
   .choose-theme-navbar {
-    height: 90px;
+    height: var(--choose-theme-navbar-height);
     padding: 0 24px;
   }
 
@@ -299,6 +403,21 @@
     font-size: clamp(42px, 8vw, 72px);
     line-height: 1.2;
     text-align: center;
+  }
+
+  .choose-theme-modal {
+    width: min(680px, 100%);
+    padding: 56px 44px 48px;
+  }
+
+  .choose-theme-modal-title {
+    margin-bottom: 32px;
+    font-size: clamp(36px, 5vw, 46px);
+  }
+
+  .choose-theme-difficulty-option {
+    min-height: 72px;
+    font-size: 30px;
   }
 
   .choose-theme-label {
@@ -363,6 +482,25 @@
   .choose-theme-brand {
     gap: 8px;
     font-size: 24px;
+  }
+
+  .choose-theme-modal-overlay {
+    padding: 16px;
+  }
+
+  .choose-theme-modal {
+    padding: 54px 20px 30px;
+  }
+
+  .choose-theme-modal-title {
+    margin-bottom: 28px;
+    font-size: 32px;
+  }
+
+  .choose-theme-difficulty-option {
+    min-height: 64px;
+    padding: 10px 14px;
+    font-size: 23px;
   }
 
   .choose-theme-logo {
