@@ -1,0 +1,1226 @@
+/* Galindo */
+@import url('https://fonts.googleapis.com/css2?family=Galindo&display=swap');
+/* IBM Plex Mono */
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@700&display=swap');
+/* Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+/* Cantata One */
+@import url('https://fonts.googleapis.com/css2?family=Cantata+One&display=swap');
+/* Enriqueta */
+@import url('https://fonts.googleapis.com/css2?family=Enriqueta:wght@400;500;600;700&display=swap');
+
+.play-game-page {
+  --play-game-navbar-height: 81px;
+
+  position: relative;
+  width: calc(100% + 16px);
+  min-height: 100vh;
+  margin: -8px;
+  overflow: hidden;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Inter', sans-serif;
+}
+
+.play-game-navbar {
+  height: var(--play-game-navbar-height);
+  padding: 0 56px 0 34px;
+}
+
+.play-game-navbar .choose-theme-brand {
+  gap: 13px;
+  font-size: 37px;
+  line-height: 35px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.play-game-navbar .choose-theme-logo {
+  width: 64px;
+  height: 61px;
+}
+
+.play-game-nav-action {
+  box-sizing: border-box;
+  width: 310px;
+  height: 46px;
+  background: #f3e4c9;
+  color: #000000;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 27px;
+  font-weight: 700;
+  line-height: 46px;
+  text-align: center;
+}
+
+.play-game-board {
+  position: absolute;
+  top: var(--play-game-navbar-height);
+  left: 0;
+  box-sizing: border-box;
+  width: 149.2537%;
+  height: calc((100vh - var(--play-game-navbar-height)) / 0.67);
+  padding: 38px 3.4% 26px;
+  display: grid;
+  grid-template-columns: minmax(120px, 296px) minmax(0, 1fr) minmax(120px, 205px);
+  grid-template-rows: 1fr auto;
+  align-items: center;
+  column-gap: clamp(20px, 4vw, 72px);
+  row-gap: 32px;
+  transform: scale(0.67);
+  transform-origin: top left;
+}
+
+.play-game-left-rail,
+.play-game-right-rail {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.play-game-notes {
+  display: block;
+  width: 300px;
+  max-height: 250px;
+  object-fit: contain;
+  margin-left: -80px;
+}
+
+.play-game-notes-trigger {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.play-game-menu {
+  box-sizing: border-box;
+  width: min(100%, 240px);
+  min-height: 91px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  background: #F3E4C9;
+  color: #000000;
+  font-family: 'Galindo', sans-serif;
+  font-size: 36px;
+  text-align: center;
+  text-decoration: none;
+  border: 3.5px solid #000000;
+  margin-bottom: -10px;
+  cursor: pointer;
+}
+
+.play-game-menu img {
+  width: 58px;
+  height: 61px;
+  object-fit: contain;
+}
+
+.play-game-cards {
+  margin-top: 90px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(50px, 2vw, 38px);
+}
+
+.play-game-card-row {
+  width: max-content;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 180px));
+  justify-content: center;
+  gap: 80px;
+}
+
+.play-game-card-row.is-short {
+  width: max-content;
+  grid-template-columns: repeat(3, minmax(0, 180px));
+}
+
+.play-game-npc-card {
+  position: relative;
+  perspective: 1000px;
+  box-sizing: border-box;
+  width: 210px;
+  aspect-ratio: 210 / 320;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 11px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.play-game-npc-card-inner {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 620ms cubic-bezier(0.2, 0.7, 0.25, 1);
+}
+
+.play-game-npc-card-hint-rotation {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  transform-style: preserve-3d;
+  transition: transform 620ms cubic-bezier(0.2, 0.7, 0.25, 1);
+}
+
+.play-game-npc-card-hint-rotation.is-active {
+  transform: rotateY(-180deg);
+}
+
+.play-game-npc-card-hint-rotation.is-active.is-open {
+  transform: rotateY(-360deg);
+}
+
+.play-game-npc-card-hint-rotation.is-active .play-game-npc-card-inner {
+  visibility: hidden;
+}
+
+.play-game-npc-card-hint-back {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 7.5px solid #000000;
+  border-radius: inherit;
+  background: var(--play-game-card-color);
+  backface-visibility: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transform: rotateY(180deg);
+}
+
+.play-game-npc-card-hint-back img {
+  width: 110px;
+  height: 105px;
+  object-fit: contain;
+}
+
+.play-game-npc-card.is-open .play-game-npc-card-inner {
+  transform: rotateY(180deg);
+}
+
+.play-game-npc-card-hint-rotation > .play-game-npc-card-inner.is-open {
+  transform: rotateY(180deg);
+}
+
+.play-game-npc-card.is-open {
+  z-index: 1;
+}
+
+.play-game-npc-card-back,
+.play-game-npc-card-face {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 7.5px solid #000000;
+  border-radius: inherit;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.play-game-npc-card-back {
+  background: var(--play-game-card-color);
+}
+
+.play-game-npc-card-back img {
+  display: block;
+  width: 110px;
+  height: 105px;
+  object-fit: contain;
+}
+
+.play-game-npc-card-face {
+  padding: 16px 10px;
+  box-sizing: border-box;
+  gap: 10px;
+  background: #fffdf5;
+  transform: rotateY(180deg);
+  color: #000000;
+  font-family: 'Galindo', sans-serif;
+  font-size: 17px;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.play-game-npc-card-face.play-game-npc-card-hint-face {
+  transform: none;
+  color: #8a6200;
+}
+
+.play-game-npc-card-face img {
+  display: block;
+  width: 52%;
+  height: 40%;
+  object-fit: contain;
+  margin-bottom: 9px;
+}
+
+.play-game-npc-card:focus-visible {
+  outline: 4px solid #000000;
+  outline-offset: 4px;
+}
+
+.play-game-npc-modal-overlay {
+  position: fixed;
+  z-index: 12;
+  inset: var(--play-game-navbar-height) 0 0;
+  box-sizing: border-box;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 38%);
+}
+
+.play-game-npc-modal-group {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+}
+
+.play-game-npc-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(350px, 100%);
+  max-height: 550px;
+  padding: 36px 35px 32px;
+  border: 7.5px solid #000000;
+  border-radius: 18px;
+  background: #fffdf5;
+  box-shadow: 12px 12px 0 rgb(0 0 0 / 25%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.play-game-main-idea-modal {
+  box-sizing: border-box;
+  width: min(300px, 35vw);
+  max-height: min(240px, calc(100vh - var(--play-game-navbar-height) - 48px));
+  padding: 18px 22px;
+  border: 4px solid #000000;
+  background: #fffdf5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.play-game-main-idea-modal h2 {
+  margin: 0 0 10px;
+  color: #8a6200;
+  font-family: 'Galindo', sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+}
+
+.play-game-main-idea-modal p {
+  margin: 0;
+  font-family: 'Enriqueta', serif;
+  font-size: 17px;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.play-game-npc-modal-close {
+  position: absolute;
+  top: 8px;
+  right: 12px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.play-game-npc-modal-image {
+  display: block;
+  width: min(64%, 90px);
+  height: 100px;
+  margin: 8px auto 16px;
+  object-fit: contain;
+}
+
+.play-game-npc-modal-name,
+.play-game-npc-modal-role,
+.play-game-npc-modal-content {
+  margin: 0;
+}
+
+.play-game-npc-modal-name {
+  font-family: 'Galindo', sans-serif;
+  font-size: 30px;
+  font-weight: 300;
+  line-height: 1;
+}
+
+.play-game-npc-modal-role {
+  margin-top: 6px;
+  font-family: 'Cantata One', serif;
+  font-size: 20px;
+  line-height: 1.2;
+  text-transform: capitalize;
+}
+
+.play-game-npc-modal-content {
+  width: 100%;
+  margin-top: 20px;
+  font-family: 'Enriqueta';
+  font-size: 17px;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.play-game-vocabulary-word {
+  display: inline;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  text-align: inherit;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  cursor: pointer;
+}
+
+.play-game-vocabulary-word:focus-visible {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+.play-game-vocabulary-word.is-active {
+  color: #0875d1;
+  text-decoration-color: currentColor;
+}
+
+.play-game-vocabulary-popup {
+  position: fixed;
+  z-index: 30;
+  box-sizing: border-box;
+  width: max-content;
+  max-height: min(200px, calc(100vh - 24px));
+  max-width: calc(100vw - 24px);
+  padding: 5px 5px 6px;
+  border: 2px solid #000000;
+  border-radius: 0;
+  background: #ffe6bb;
+  box-shadow: 4px 4px 0 rgb(0 0 0 / 20%);
+  color: #000000;
+  font-family: 'Enriqueta', serif;
+  font-size: 15px;
+  line-height: 1.4;
+  overflow-y: auto;
+  cursor: pointer;
+  font-style: italic;
+}
+
+.play-game-vocabulary-popup p {
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.play-game-vocabulary-status {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  left: 50%;
+  width: max-content;
+  max-width: calc(100% - 24px);
+  margin: 0;
+  padding: 8px 12px;
+  transform: translateX(-50%);
+  border: 1px solid #9e1b1b;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #9e1b1b;
+  font-size: 13px;
+  text-align: center;
+}
+
+.play-game-hints-card {
+  box-sizing: border-box;
+  width: min(100%, 200px);
+  aspect-ratio: 200 / 273;
+  max-height: 273px;
+  padding: 20px 10px;
+  border: 7.5px solid #302e2e;
+  border-radius: 10px;
+  background: var(--play-game-card-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  color: #ffffff;
+  font-family: 'Galindo';
+  font-size: 27px;
+  font-weight: 500;
+  text-align: center;
+  appearance: none;
+  cursor: pointer;
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.play-game-hints-card.is-used {
+  background: color-mix(in srgb, var(--play-game-card-color) 58%, #000000);
+  color: #b9b9b9;
+  cursor: not-allowed;
+}
+
+.play-game-hints-card img {
+  display: block;
+  width: min(58%, 104px);
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.play-game-hints-card.is-used img {
+  filter: grayscale(1) brightness(0.75);
+}
+
+.play-game-hints-error {
+  margin: 8px 0 0;
+  color: #9e1b1b;
+  font-size: 14px;
+  text-align: center;
+}
+.play-game-clue-stack {
+  position: relative;
+  width: min(100%, 190px);
+  aspect-ratio: 190 / 263;
+  max-height: 263px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  display: block;
+  cursor: pointer;
+}
+
+.play-game-clue-layer,
+.play-game-clue-card {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 7.5px solid #302e2e;
+  border-radius: 10px;
+}
+
+.play-game-clue-layer-back {
+  transform: translate(13px, 13px);
+  background: #4f4f4f;
+}
+
+.play-game-clue-layer-middle {
+  transform: translate(6px, 6px);
+  background: #4f4f4f;
+}
+
+.play-game-clue-card {
+  padding: 16px 10px;
+  background: var(--play-game-card-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 25px;
+  color: #ffffff;
+  font-size: 27px;
+  font-family: 'Galindo';
+  font-weight: 500;
+  text-align: center;
+}
+
+.play-game-clue-card img {
+  width: min(54%, 96px);
+  max-height: 45%;
+  object-fit: contain;
+}
+
+.play-game-clues-overlay {
+  position: fixed;
+  z-index: 13;
+  inset: var(--play-game-navbar-height) 0 0;
+  box-sizing: border-box;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 38%);
+}
+
+.play-game-clues-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(900px, 100%);
+}
+
+.play-game-clues-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 30px;
+}
+
+.play-game-clue-close {
+  position: absolute;
+  z-index: 1;
+  top: 4px;
+  right: 4px;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.play-game-clue-close.is-back {
+  color: #ffffff;
+}
+
+.play-game-clue-reveal-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 210 / 320;
+  perspective: 1000px;
+  pointer-events: none;
+}
+
+.play-game-clue-reveal-inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform 1000ms cubic-bezier(0.2, 0.7, 0.25, 1);
+  pointer-events: none;
+}
+
+.play-game-clue-reveal-card.is-flipped .play-game-clue-reveal-inner {
+  transform: rotateY(180deg);
+}
+
+.play-game-clue-reveal-back,
+.play-game-clue-reveal-face {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 7.5px solid #302e2e;
+  border-radius: 11px;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+}
+
+.play-game-clue-reveal-back {
+  gap: 18px;
+  background: var(--play-game-card-color);
+  color: #ffffff;
+  font-family: 'Galindo', sans-serif;
+  font-size: clamp(18px, 2vw, 27px);
+  pointer-events: auto;
+}
+
+.play-game-clue-reveal-card.is-flipped .play-game-clue-reveal-back {
+  pointer-events: none;
+}
+
+.play-game-clue-reveal-back img {
+  width: 54%;
+  max-height: 42%;
+  object-fit: contain;
+}
+
+.play-game-clue-reveal-face {
+  padding: 18px 26px;
+  gap: 10px;
+  background: #fffdf5;
+  transform: rotateY(180deg);
+  color: #000000;
+  pointer-events: none;
+}
+
+.play-game-clue-reveal-card.is-flipped .play-game-clue-reveal-face {
+  pointer-events: auto;
+}
+
+.play-game-clue-reveal-face img {
+  width: min(38%, 72px);
+  height: 25%;
+  object-fit: contain;
+  margin-bottom: 25px;
+}
+
+.play-game-clue-reveal-face h2 {
+  margin: 0;
+  font-family: 'Galindo', sans-serif;
+  font-size: clamp(14px, 1.5vw, 20px);
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.play-game-clue-reveal-face p {
+  width: 100%;
+  margin: 0;
+  overflow-y: auto;
+  font-family: 'Enriqueta', serif;
+  font-size: clamp(11px, 1.1vw, 15px);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.play-game-clue-reveal-face.has-main-idea {
+  justify-content: flex-start;
+  padding-top: 34px;
+}
+
+.play-game-clue-main-idea {
+  width: 100%;
+  max-height: 25%;
+  flex: 0 1 auto;
+  overflow-y: auto;
+  color: #8a6200;
+  font-weight: 700;
+}
+
+.play-game-error {
+  min-height: calc(100vh - var(--play-game-navbar-height));
+  padding: 32px;
+  display: grid;
+  place-items: center;
+  color: #9e1b1b;
+  font-size: 20px;
+  text-align: center;
+}
+
+.play-game-notes-overlay {
+  position: fixed;
+  z-index: 10;
+  inset: var(--play-game-navbar-height) 0 0;
+  box-sizing: border-box;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 38%);
+}
+
+.play-game-notes-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(820px, 100%);
+  height: min(500px, calc(100vh - var(--play-game-navbar-height) - 48px));
+  padding: 32px 48px 36px;
+  border: 4px solid #000000;
+  background: #fffdf5;
+  box-shadow: 12px 12px 0 rgb(0 0 0 / 25%);
+  display: flex;
+  flex-direction: column;
+}
+
+.play-game-notes-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.play-game-notes-title {
+  margin: 0 0 12px;
+  font-family: 'Cantata One', serif;
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.play-game-notes-label {
+  margin-bottom: 6px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.play-game-notes-input {
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 0;
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #c8c0b2;
+  border-radius: 0;
+  outline-color: #302e2e;
+  background-color: #fffdf5;
+  color: #222222;
+  font: 18px/1.5 'Inter', sans-serif;
+  resize: vertical;
+}
+
+.play-game-notes-input::placeholder {
+  color: #817b70;
+}
+
+.play-game-notes-error {
+  margin: 12px 0 0;
+  color: #9e1b1b;
+  font-size: 14px;
+}
+
+.play-game-menu-overlay {
+  position: fixed;
+  z-index: 11;
+  inset: var(--play-game-navbar-height) 0 0;
+  box-sizing: border-box;
+  padding: 24px;
+  display: grid;
+  place-items: center;
+  overflow-y: auto;
+  background: rgb(0 0 0 / 38%);
+}
+
+.play-game-menu-modal {
+  position: relative;
+  box-sizing: border-box;
+  width: min(620px, 100%);
+  padding: 52px 48px 42px;
+  border: 4px solid #000000;
+  background: #f3e4c9;
+  box-shadow: 12px 12px 0 rgb(0 0 0 / 25%);
+}
+
+.play-game-menu-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #000000;
+  font-family: Arial, sans-serif;
+  font-size: 42px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.play-game-menu-title {
+  margin: 0 0 24px;
+  font-family: 'Cantata One', serif;
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.play-game-menu-options {
+  display: grid;
+  gap: 14px;
+}
+
+.play-game-menu-option {
+  box-sizing: border-box;
+  min-height: 62px;
+  padding: 10px 18px;
+  border: 3px solid #000000;
+  background: #ffffff;
+  color: #000000;
+  display: grid;
+  place-items: center;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.play-game-menu-option:hover,
+.play-game-menu-option:focus-visible {
+  background: #d9d9d9;
+}
+
+@media (max-width: 1100px) {
+  .play-game-page {
+    --play-game-navbar-height: 90px;
+  }
+
+  .play-game-navbar {
+    padding: 0 24px;
+  }
+
+  .play-game-navbar .choose-theme-brand {
+    gap: 16px;
+    font-size: 32px;
+    line-height: 52px;
+  }
+
+  .play-game-navbar .choose-theme-logo {
+    width: 58px;
+    height: 58px;
+  }
+
+  .play-game-nav-action {
+    width: auto;
+    height: 54px;
+    padding: 0 18px;
+    font-size: 20px;
+    line-height: normal;
+  }
+
+  .play-game-board {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: auto;
+    min-height: calc(100vh - var(--play-game-navbar-height));
+    grid-template-columns: minmax(90px, 150px) minmax(0, 1fr) minmax(90px, 150px);
+    padding-right: 24px;
+    padding-left: 24px;
+    column-gap: 24px;
+    transform: none;
+  }
+
+  .play-game-cards {
+    gap: 18px;
+  }
+
+  .play-game-card-row {
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .play-game-card-row.is-short {
+    width: 75%;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .play-game-npc-card {
+    width: min(100%, 120px);
+    justify-self: center;
+  }
+
+  .play-game-npc-card-back,
+  .play-game-npc-card-face,
+  .play-game-npc-card-hint-back {
+    border-width: 5px;
+  }
+
+  .play-game-npc-card-back img,
+  .play-game-npc-card-hint-back img {
+    width: 64px;
+    height: 61px;
+  }
+
+  .play-game-npc-card-face {
+    padding: 8px 5px;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .play-game-npc-card-face {
+    padding: 8px 5px;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .play-game-menu {
+    flex-direction: column;
+    font-size: 18px;
+  }
+
+  .play-game-menu img {
+    width: 46px;
+    height: 48px;
+  }
+
+  .play-game-notes {
+    width: min(100%, 180px);
+    margin-left: 0;
+  }
+
+  .play-game-npc-modal-group.has-main-idea {
+    width: min(100%, 520px);
+    flex-direction: column;
+  }
+
+  .play-game-npc-modal-group.has-main-idea .play-game-npc-modal,
+  .play-game-main-idea-modal {
+    width: 100%;
+    height: auto;
+  }
+
+  .play-game-main-idea-modal {
+    max-height: 200px;
+  }
+}
+
+@media (max-width: 760px) {
+  .play-game-board {
+    min-height: calc(100vh - var(--play-game-navbar-height));
+    padding: 24px 18px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 24px;
+  }
+
+  .play-game-cards {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .play-game-card-row {
+    gap: 12px;
+  }
+
+  .play-game-npc-card-hint-back {
+    border-width: 4px;
+  }
+
+  .play-game-npc-card-hint-back img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .play-game-left-rail,
+  .play-game-right-rail {
+    min-height: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 16px;
+  }
+
+  .play-game-left-rail {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .play-game-right-rail {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .play-game-notes-trigger {
+    width: min(100%, 100px);
+  }
+
+  .play-game-notes {
+    width: 100%;
+    max-height: 100px;
+    margin-left: 0;
+  }
+
+  .play-game-menu {
+    min-height: 58px;
+    flex-direction: row;
+    font-size: 16px;
+  }
+
+  .play-game-menu img {
+    width: 34px;
+    height: 36px;
+  }
+
+  .play-game-hints-card,
+  .play-game-clue-stack {
+    width: min(100%, 100px);
+    aspect-ratio: 1;
+    min-height: 82px;
+    padding: 8px;
+    gap: 4px;
+    font-size: 13px;
+  }
+
+  .play-game-hints-card img,
+  .play-game-clue-card img {
+    width: 44%;
+    max-height: 45%;
+  }
+}
+
+@media (max-width: 480px) {
+  .play-game-navbar {
+    padding: 0 12px;
+  }
+
+  .play-game-navbar .choose-theme-brand {
+    gap: 8px;
+    font-size: 24px;
+  }
+
+  .play-game-navbar .choose-theme-logo {
+    width: 42px;
+    height: 42px;
+  }
+
+  .play-game-nav-action {
+    height: 44px;
+    padding: 0 8px;
+    font-size: 13px;
+  }
+
+  .play-game-board {
+    padding: 20px 12px;
+    gap: 18px 12px;
+  }
+
+  .play-game-notes-overlay {
+    padding: 16px;
+  }
+
+  .play-game-clues-overlay {
+    padding: 12px;
+  }
+
+  .play-game-clues-modal {
+    width: 100%;
+  }
+
+  .play-game-clues-row {
+    gap: 10px;
+  }
+
+  .play-game-clue-close {
+    top: 2px;
+    right: 2px;
+    width: 28px;
+    height: 28px;
+    font-size: 25px;
+  }
+
+  .play-game-clue-reveal-back,
+  .play-game-clue-reveal-face {
+    border-width: 4px;
+    border-radius: 7px;
+  }
+
+  .play-game-clue-reveal-back {
+    gap: 8px;
+    font-size: 14px;
+  }
+
+  .play-game-clue-reveal-face {
+    padding: 8px 6px;
+    gap: 6px;
+  }
+
+  .play-game-clue-reveal-face h2 {
+    font-size: 12px;
+  }
+
+  .play-game-clue-reveal-face p {
+    font-size: 10px;
+  }
+
+  .play-game-npc-modal-overlay {
+    padding: 16px;
+  }
+
+  .play-game-npc-modal {
+    max-height: min(550px, calc(100vh - var(--play-game-navbar-height) - 32px));
+    padding: 40px 20px 24px;
+    border-width: 5px;
+    border-radius: 14px;
+    overflow-y: auto;
+  }
+
+  .play-game-npc-modal-image {
+    height: 190px;
+  }
+
+  .play-game-npc-modal-content {
+    margin-top: 16px;
+    font-size: 15px;
+  }
+
+  .play-game-notes-modal {
+    height: min(460px, calc(100vh - var(--play-game-navbar-height) - 32px));
+    padding: 42px 20px 24px;
+  }
+
+  .play-game-menu-overlay {
+    padding: 16px;
+  }
+
+  .play-game-menu-modal {
+    padding: 48px 20px 28px;
+  }
+
+  .play-game-menu-title {
+    font-size: 30px;
+  }
+
+  .play-game-menu-option {
+    min-height: 56px;
+    font-size: 16px;
+  }
+
+  .play-game-notes-title {
+    font-size: 30px;
+  }
+
+  .play-game-notes-input {
+    font-size: 16px;
+  }
+
+  .play-game-cards {
+    gap: 12px;
+  }
+
+  .play-game-card-row,
+  .play-game-card-row.is-short {
+    width: 100%;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .play-game-menu {
+    min-height: 48px;
+    padding: 6px;
+    gap: 6px;
+    font-size: 13px;
+  }
+
+  .play-game-menu img {
+    width: 26px;
+    height: 28px;
+  }
+}

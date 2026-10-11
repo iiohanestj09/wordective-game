@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import '../Styles/Navbar.css';
+import { readGameSession } from '../utils/gameSession';
 
 const Navbar = () => {
   const backendUrl = 'http://localhost:5000';
@@ -10,6 +11,20 @@ const Navbar = () => {
       element.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  let hasActiveGame = false;
+  try {
+    const session = readGameSession();
+    hasActiveGame = Boolean(
+      session?.caseStory
+      && Array.isArray(session.caseStory.cards)
+      && session.caseStory.cards.length === 7
+      && Array.isArray(session.caseStory.clues)
+      && session.caseStory.clues.length === 3,
+    );
+  } catch (sessionError) {
+    console.error('Unable to read the temporary game session:', sessionError);
+  }
 
   return (
     <nav className="navbar">
@@ -42,7 +57,7 @@ const Navbar = () => {
         </button>
 
         {/* Tombol Play Game */}
-        <Link className="nav-button play-game" to="/choose-theme">
+        <Link className="nav-button play-game" to={hasActiveGame ? '/play-game' : '/choose-theme'}>
           Play Game
         </Link>
       </div>
