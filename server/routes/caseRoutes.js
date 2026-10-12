@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
       case_id: selectedCase.case_id,
       difficulty_id: new mongoose.Types.ObjectId(difficulty.difficulty_id),
     })
-      .select('case_diff_id')
+      .select('case_diff_id correct_suspect logic_notes')
       .lean();
 
     if (!selectedCaseDifficulty) {
@@ -156,6 +156,8 @@ router.get('/', async (req, res) => {
 
     return res.json({
       ...selectedCase,
+      correct_suspect: selectedCaseDifficulty.correct_suspect,
+      logic_notes: selectedCaseDifficulty.logic_notes,
       cards: npcCards,
       clues: clueCards,
     });

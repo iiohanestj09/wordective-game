@@ -1,7 +1,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/PlayGame.css';
 import {
   clearGameSession,
@@ -139,6 +139,7 @@ function loadGameSession() {
 }
 
 function PlayGame() {
+  const navigate = useNavigate();
   const loadedSession = loadGameSession();
   const [session, setSession] = useState(loadedSession.session);
   const { error } = loadedSession;
@@ -154,8 +155,20 @@ function PlayGame() {
   const [isNotesOpen, setIsNotesOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCluesOpen, setIsCluesOpen] = useState(false);
+  const [isRequirementsOpen, setIsRequirementsOpen] = useState(false);
+  const [progressSaveError, setProgressSaveError] = useState('');
   const [flippedClueCount, setFlippedClueCount] = useState(0);
   const [openCardIds, setOpenCardIds] = useState(() => new Set());
+  const [readNpcCardIds, setReadNpcCardIds] = useState(
+    () => new Set(
+      Array.isArray(session?.readNpcCardIds)
+        ? session.readNpcCardIds.map(String)
+        : [],
+    ),
+  );
+  const [cluesViewed, setCluesViewed] = useState(
+    () => session?.cluesViewed === true,
+  );
   const [hints, setHints] = useState(() => session?.hints ?? {
     used: false,
     npcCardIds: [],
@@ -177,11 +190,15 @@ function PlayGame() {
       !currentSession
       || !Array.isArray(savedCase?.cards)
       || !Array.isArray(savedCase?.clues)
-      || [...savedCase.cards, ...savedCase.clues]
-        .every(
-          (card) => Array.isArray(card.vocabularies)
-            && typeof card.main_idea === 'string',
-        )
+      || (
+        [...savedCase.cards, ...savedCase.clues]
+          .every(
+            (card) => Array.isArray(card.vocabularies)
+              && typeof card.main_idea === 'string',
+          )
+        && typeof savedCase.correct_suspect === 'string'
+        && typeof savedCase.logic_notes === 'string'
+      )
     ) {
       return undefined;
     }
@@ -248,7 +265,14 @@ function PlayGame() {
   }, []);
 
   useEffect(() => {
-    if (!isNotesOpen && !isMenuOpen && !isCluesOpen && !selectedNpcCard && !vocabularyPopup) {
+    if (
+      !isNotesOpen
+      && !isMenuOpen
+      && !isCluesOpen
+      && !isRequirementsOpen
+      && !selectedNpcCard
+      && !vocabularyPopup
+    ) {
       return undefined;
     }
 
@@ -257,6 +281,7 @@ function PlayGame() {
         setIsNotesOpen(false);
         setIsMenuOpen(false);
         setIsCluesOpen(false);
+        setIsRequirementsOpen(false);
         setFlippedClueCount(0);
         setSelectedNpcCard(null);
         setVocabularyPopup(null);
@@ -265,7 +290,14 @@ function PlayGame() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isNotesOpen, isMenuOpen, isCluesOpen, selectedNpcCard, vocabularyPopup]);
+  }, [
+    isNotesOpen,
+    isMenuOpen,
+    isCluesOpen,
+    isRequirementsOpen,
+    selectedNpcCard,
+    vocabularyPopup,
+  ]);
 
   useEffect(() => {
     if (!vocabularyPopup) {
@@ -359,6 +391,65 @@ function PlayGame() {
     setVocabularyPopup(null);
   };
 
+  const handleChooseSuspect = () => {
+    if (!session) {
+      return;
+    }
+
+    const missingRequirements = [];
+    if (readNpcCardIds.size < session.caseStory.cards.length) {
+      missingRequirements.push('npc');
+    }
+    if (!cluesViewed) {
+      missingRequirements.push('clues');
+    }
+
+    if (missingRequirements.length > 0) {
+      setVocabularyPopup(null);
+      setIsRequirementsOpen(true);
+      return;
+    }
+
+    navigate('/choose-suspect');
+  };
+
+  const handleNpcCardClick = (card, cardId, isCardOpen) => {
+    if (!isCardOpen) {
+      setOpenCardIds((currentOpenCardIds) => (
+        new Set(currentOpenCardIds).add(cardId)
+      ));
+      return;
+    }
+
+    try {
+      const nextReadNpcCardIds = new Set(readNpcCardIds).add(cardId);
+      updateGameSession({ readNpcCardIds: [...nextReadNpcCardIds] });
+      setReadNpcCardIds(nextReadNpcCardIds);
+      setProgressSaveError('');
+    } catch (sessionError) {
+      setProgressSaveError(
+        `Unable to save NPC reading progress: ${sessionError.message}`,
+      );
+    }
+
+    setSelectedNpcCard(card);
+  };
+
+  const handleOpenClues = () => {
+    setVocabularyPopup(null);
+    setFlippedClueCount(0);
+    setIsCluesOpen(true);
+    try {
+      updateGameSession({ cluesViewed: true });
+      setCluesViewed(true);
+      setProgressSaveError('');
+    } catch (sessionError) {
+      setProgressSaveError(
+        `Unable to save clue reading progress: ${sessionError.message}`,
+      );
+    }
+  };
+
   const handleUseHints = () => {
     if (hints.used) {
       return;
@@ -435,9 +526,13 @@ function PlayGame() {
           />
           <span>Wordective</span>
         </Link>
-        <span className="choose-theme-nav-action play-game-nav-action">
+        <button
+          className="choose-theme-nav-action play-game-nav-action play-game-next-button"
+          onClick={handleChooseSuspect}
+          type="button"
+        >
           Choose A Suspect
-        </span>
+        </button>
       </nav>
 
       {error ? (
@@ -450,6 +545,11 @@ function PlayGame() {
           {vocabularyLoadError && (
             <p className="play-game-vocabulary-status" role="alert">
               {vocabularyLoadError}
+            </p>
+          )}
+          {progressSaveError && (
+            <p className="play-game-vocabulary-status" role="alert">
+              {progressSaveError}
             </p>
           )}
           <aside className="play-game-left-rail">
@@ -504,16 +604,7 @@ function PlayGame() {
                             isHintCard ? 'is-hint-target' : '',
                           ].filter(Boolean).join(' ')}
                           key={cardId}
-                          onClick={() => {
-                            if (isCardOpen) {
-                              setSelectedNpcCard(card);
-                              return;
-                            }
-
-                            setOpenCardIds((currentOpenCardIds) => (
-                              new Set(currentOpenCardIds).add(cardId)
-                            ));
-                          }}
+                          onClick={() => handleNpcCardClick(card, cardId, isCardOpen)}
                           type="button"
                         >
                           <span
@@ -573,11 +664,7 @@ function PlayGame() {
             <button
               aria-label="Reveal clues"
               className="play-game-clue-stack"
-              onClick={() => {
-                setVocabularyPopup(null);
-                setFlippedClueCount(0);
-                setIsCluesOpen(true);
-              }}
+              onClick={handleOpenClues}
               type="button"
             >
               <span className="play-game-clue-layer play-game-clue-layer-back" />
@@ -589,6 +676,47 @@ function PlayGame() {
             </button>
           </aside>
         </main>
+      )}
+      {isRequirementsOpen && (
+        <div
+          className="play-game-menu-overlay"
+          onClick={() => setIsRequirementsOpen(false)}
+        >
+          <section
+            aria-labelledby="play-game-requirements-title"
+            aria-modal="true"
+            className="play-game-menu-modal play-game-requirements-modal"
+            onClick={(event) => event.stopPropagation()}
+            role="dialog"
+          >
+            <button
+              aria-label="Close requirements"
+              className="play-game-menu-close"
+              onClick={() => setIsRequirementsOpen(false)}
+              type="button"
+            >
+              ×
+            </button>
+            <h2 className="play-game-menu-title" id="play-game-requirements-title">
+              Before Choosing a Suspect
+            </h2>
+            <div className="play-game-requirements-list">
+              {readNpcCardIds.size < session.caseStory.cards.length && (
+                <p>Open and Read all NPC cards before choosing a suspect.</p>
+              )}
+              {!cluesViewed && (
+                <p>Open the clues and review them before choosing a suspect.</p>
+              )}
+            </div>
+            <button
+              className="play-game-menu-option"
+              onClick={() => setIsRequirementsOpen(false)}
+              type="button"
+            >
+              Continue Reading
+            </button>
+          </section>
+        </div>
       )}
       {isNotesOpen && (
         <div

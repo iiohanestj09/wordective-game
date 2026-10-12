@@ -85,6 +85,8 @@ function Story() {
           && typeof savedCase.case_title === 'string'
           && typeof savedCase.story === 'string';
         const hasVocabularyData = hasReusableCase
+          && typeof savedCase.correct_suspect === 'string'
+          && typeof savedCase.logic_notes === 'string'
           && [...savedCase.cards, ...savedCase.clues].every(
             (card) => Array.isArray(card.vocabularies)
               && typeof card.main_idea === 'string',
@@ -192,6 +194,17 @@ function Story() {
                 themeIndex,
                 caseStory: caseWithCards,
                 hints,
+                readNpcCardIds: isRefreshingSavedCase
+                  ? savedSession?.readNpcCardIds ?? []
+                  : [],
+                cluesViewed: isRefreshingSavedCase
+                  && savedSession?.cluesViewed === true,
+                selectedSuspectCardId: isRefreshingSavedCase
+                  ? savedSession?.selectedSuspectCardId ?? null
+                  : null,
+                selectedSuspectName: isRefreshingSavedCase
+                  ? savedSession?.selectedSuspectName ?? null
+                  : null,
                 npcCardOrders: {
                   ...savedSession?.npcCardOrders,
                   [caseId]: cards.map((card) => String(card.card_id)),

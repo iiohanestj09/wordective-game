@@ -53,6 +53,40 @@
   text-align: center;
 }
 
+.play-game-next-button {
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.play-game-next-button:hover,
+.play-game-next-button:focus-visible {
+  background: #e8d6b5;
+}
+
+.play-game-requirements-modal {
+  width: min(720px, 100%);
+}
+
+.play-game-requirements-list {
+  margin: 0 0 24px;
+  display: grid;
+  gap: 12px;
+  font-family: 'Enriqueta', serif;
+  font-size: 19px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.play-game-requirements-list p {
+  margin: 0;
+}
+
+.play-game-requirements-modal > .play-game-menu-option {
+  width: min(100%, 320px);
+  margin-inline: auto;
+}
+
 .play-game-board {
   position: absolute;
   top: var(--play-game-navbar-height);
@@ -1191,6 +1225,14 @@
 
   .play-game-menu-option {
     min-height: 56px;
+    font-size: 16px;
+  }
+
+  .play-game-requirements-modal {
+    padding: 48px 20px 28px;
+  }
+
+  .play-game-requirements-list {
     font-size: 16px;
   }
 
