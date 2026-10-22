@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../Styles/PlayGame.css';
 import '../Styles/ChooseSuspect.css';
 import { clearGameSession, readGameSession, updateGameSession } from '../utils/gameSession';
+import { hasMinimumWords } from '../utils/reasonValidation';
 
 const backendUrl = 'http://localhost:5000';
 const themeCardColors = {
@@ -59,10 +60,7 @@ function ChooseSuspect() {
   const selectedSuspectCardId = session?.selectedSuspectCardId == null
     ? null
     : String(session.selectedSuspectCardId);
-  const suspectReasonWordCount = suspectReason.trim()
-    ? suspectReason.trim().split(/\s+/).length
-    : 0;
-  const hasValidSuspectReason = suspectReasonWordCount >= 10;
+  const hasValidSuspectReason = hasMinimumWords(suspectReason, 10);
 
   useEffect(() => {
     if (!isNotesOpen && !isMenuOpen && !selectedCard) {

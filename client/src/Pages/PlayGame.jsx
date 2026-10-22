@@ -182,6 +182,11 @@ function PlayGame() {
   const [vocabularyLoadError, setVocabularyLoadError] = useState('');
   const [notes, setNotes] = useState(() => session?.notes ?? '');
   const [notesSaveError, setNotesSaveError] = useState('');
+  const requiredNpcCardIds = hints.used
+    ? new Set(hints.npcCardIds.map(String))
+    : new Set(session?.caseStory.cards.map((card) => String(card.card_id)) ?? []);
+  const hasUnreadRequiredNpcCards = [...requiredNpcCardIds]
+    .some((cardId) => !readNpcCardIds.has(cardId));
 
   useEffect(() => {
     const currentSession = readGameSession();
@@ -397,7 +402,7 @@ function PlayGame() {
     }
 
     const missingRequirements = [];
-    if (readNpcCardIds.size < session.caseStory.cards.length) {
+    if (hasUnreadRequiredNpcCards) {
       missingRequirements.push('npc');
     }
     if (!cluesViewed) {
@@ -701,8 +706,12 @@ function PlayGame() {
               Before Choosing a Suspect
             </h2>
             <div className="play-game-requirements-list">
-              {readNpcCardIds.size < session.caseStory.cards.length && (
-                <p>Open and Read all NPC cards before choosing a suspect.</p>
+              {hasUnreadRequiredNpcCards && (
+                <p>
+                  {hints.used
+                    ? 'Open and Read all NPC cards with hints before choosing a suspect.'
+                    : 'Open and Read all NPC cards before choosing a suspect.'}
+                </p>
               )}
               {!cluesViewed && (
                 <p>Open the clues and review them before choosing a suspect.</p>

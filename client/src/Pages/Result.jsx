@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../Styles/PlayGame.css';
 import '../Styles/Result.css';
 import { clearGameSession, readGameSession, updateGameSession } from '../utils/gameSession';
+import { matchesSuspectName } from '../utils/suspectMatching';
 
 const backendUrl = 'http://localhost:5000';
 
@@ -34,18 +35,6 @@ function loadResultSession() {
       error: `Unable to read the game result: ${sessionError.message}`,
     };
   }
-}
-
-function getCharacterName(cardTitle) {
-  return cardTitle.split(',')[0].trim();
-}
-
-function normalizeCharacterName(name) {
-  return name
-    .split(',')[0]
-    .trim()
-    .replace(/\s+/g, ' ')
-    .toLocaleLowerCase();
 }
 
 function CharacterResult({ card, heading, headingType, logicNotes }) {
@@ -159,8 +148,10 @@ function Result() {
   );
   const correctCard = typeof session?.caseStory.correct_suspect === 'string'
     ? session.caseStory.cards.find(
-      (card) => normalizeCharacterName(getCharacterName(card.card_title))
-        === normalizeCharacterName(session.caseStory.correct_suspect),
+      (card) => matchesSuspectName(
+        card.card_title,
+        session.caseStory.correct_suspect,
+      ),
     )
     : null;
   const hasAnswerData = typeof session?.caseStory.correct_suspect === 'string'
