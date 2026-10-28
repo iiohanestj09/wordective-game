@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import AOS from 'aos';
 import 'aos/dist/aos.css'; 
 import '../Styles/Introduction.css';
+import { readGameSession } from '../utils/gameSession';
 
 const Introduction = () => {
+  const navigate = useNavigate();
   const backendUrl = 'http://localhost:5000';
   
   const carouselImages = [
@@ -15,6 +18,23 @@ const Introduction = () => {
 
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(true);
+
+  const handleStartGame = () => {
+    try {
+      const session = readGameSession();
+      const hasActiveGame = Boolean(
+        session?.caseStory
+        && Array.isArray(session.caseStory.cards)
+        && session.caseStory.cards.length === 7
+        && Array.isArray(session.caseStory.clues)
+        && session.caseStory.clues.length === 3,
+      );
+      navigate(hasActiveGame ? '/play-game' : '/choose-theme');
+    } catch (sessionError) {
+      console.error('Unable to read the temporary game session:', sessionError);
+      navigate('/choose-theme');
+    }
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -70,7 +90,7 @@ const Introduction = () => {
           </p>
 
           <div className="start-game-container" data-aos="flip-down" data-aos-delay="300">
-            <button className="start-game-btn">
+            <button className="start-game-btn" onClick={handleStartGame} type="button">
               Let's Start The Game
             </button>
           </div>
